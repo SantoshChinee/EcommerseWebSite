@@ -1,0 +1,73 @@
+package com.EcommerceProject.Impl;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.EcommerceProject.Dao.EcommerceDao;
+import com.EcommerceProject.Entity.EcommerceEntity;
+@Repository
+public class EcommerceImpl implements EcommerceDao  {
+	private EntityManager entity;
+	@Autowired
+	public EcommerceImpl(EntityManager theEntity)
+	{
+		this.entity=theEntity;
+	}
+	@Override
+	@Transactional
+	public EcommerceEntity addEcommerce(EcommerceEntity e) {
+		Session currentSession=entity.unwrap(Session.class);
+		currentSession.saveOrUpdate(e);
+		// TODO Auto-generated method stub
+		return e;
+	}
+	@Override
+	@Transactional
+	public List<EcommerceEntity> getEcommerce()
+	{
+		Session currentSession=entity.unwrap(Session.class);
+		Query<EcommerceEntity> query=currentSession.createQuery("from EcommerceEntity",EcommerceEntity.class);
+		List<EcommerceEntity> commerceEntity=query.getResultList();
+		return commerceEntity;
+	}
+	@Override
+	@Transactional
+	public int updatePrice(String productCategory) {
+		Session currentSession=entity.unwrap(Session.class);
+		Query<EcommerceEntity> query=currentSession.createQuery("from EcommerceEntity where pCategory=:productCategory",EcommerceEntity.class);
+		query.setParameter("productCategory",productCategory);
+		EcommerceEntity ec=query.getSingleResult();
+		Integer pid=ec.getpId();
+		Integer discount=ec.getDiscount();
+		Integer gst=ec.getGst();
+		Double deliveryCharge=ec.getDeliveryCharge();
+		double price =ec.getPrice();
+		double totalPrice=price-((discount/100)+(gst/100)+deliveryCharge);
+		System.out.println("TotalPrice is ="+totalPrice);
+		ec.setPrice(totalPrice);
+		// TODO Auto-generated method stub
+		return pid;
+	}
+	@Override
+	@Transactional
+	public int deletePid(int pid) {
+		Session currentSession=entity.unwrap(Session.class);
+		Query<EcommerceEntity> query=currentSession.createQuery("delete from EcommerceEntity where pId=:pid",EcommerceEntity.class);
+		query.setParameter("pid",pid);
+		query.executeUpdate();
+		
+		// TODO Auto-generated method stub
+		return pid;
+	}
+	
+	
+
+}
