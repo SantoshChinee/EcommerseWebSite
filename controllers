@@ -1,0 +1,49 @@
+package com.EcommerceProject.RestController;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.EcommerceProject.Entity.EcommerceEntity;
+import com.EcommerceProject.Impl.EcommerceImpl;
+
+@RestController
+@RequestMapping("/api")
+public class Controller {
+	private EcommerceImpl eCommImpl;
+	@Autowired 
+	public Controller(EcommerceImpl theEcomm)
+	{
+		this.eCommImpl=theEcomm;
+	}
+	@PostMapping("/ecommerce")
+	public EcommerceEntity addCitizenInfo(@RequestBody EcommerceEntity c) 
+	{
+		return eCommImpl.addEcommerce(c);
+	}
+	@GetMapping("/ecommerce")
+	public List<EcommerceEntity> getEcommerce(){
+		return eCommImpl.getEcommerce();
+	}
+	@PutMapping("/ecommerce/{pCategory}")
+	public String updatedPrice(@PathVariable String pCategory)
+	{
+		int pid=eCommImpl.updatePrice(pCategory);
+		return "updated pCategory is"+pid;
+	}
+	@DeleteMapping("/deletecommerce/{pid}")
+	public String deleteCommerce(@PathVariable int pid)
+	{
+		int pId=eCommImpl.deletePid(pid);
+		return "Deleted pId is "+pId;
+	}
+
+}
