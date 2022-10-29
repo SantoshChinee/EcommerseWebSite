@@ -1,0 +1,13 @@
+package com.EcommerceProject.Dao;
+
+import java.util.List;
+
+import com.EcommerceProject.Entity.EcommerceEntity;
+
+public interface EcommerceDao {
+	public EcommerceEntity addEcommerce(EcommerceEntity e);
+	public List<EcommerceEntity> getEcommerce();
+	public int updatePrice(String pCategory); 
+	public int deletePid(int pid);	
+
+}
