@@ -1,0 +1,101 @@
+package com.EcommerceProject.Entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="product")
+@SecondaryTable(name="productdiscount")
+public class EcommerceEntity {
+	
+	//Table Product
+	@Id
+	@Column(name="PRODUCTCATEGORY")
+	private String pCategory;
+	@Column(name="PRODUCTID")
+	private int pId;
+	@Column(name="PRODUCTNAME")
+	private String pName;
+	@Column(name="PRODUCTTYPE")
+	private String pType;
+	@Column(name="PRODUCTPRICE")
+	private double price;
+	
+	//Table discount
+	@Column(name="DISCOUNT_PERCENTAGE",table="productdiscount")
+	private Integer discount;
+	@Column(name="GST_PERCENTAGE",table="productdiscount")
+	private Integer gst;
+	@Column(name="DELIVERYCHARGE",table="productdiscount")
+	private Double deliveryCharge;
+	public EcommerceEntity() {
+		super();
+	}
+	public EcommerceEntity(int pId, String pName, String pType, String pCategory, double price,Integer discount,
+			Integer gst,Double deliveryCharge) {
+		super();
+		this.pId = pId;
+		this.pName = pName;
+		this.pType = pType;
+		this.pCategory = pCategory;
+		this.price = price;
+		this.discount = discount;
+		this.gst = gst;
+		this.deliveryCharge = deliveryCharge;
+	}
+
+
+	public int getpId() {
+		return pId;
+	}
+	public void setpId(int pId) {
+		this.pId = pId;
+	}
+	public String getpName() {
+		return pName;
+	}
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
+	public String getpCategory() {
+		return pCategory;
+	}
+	public void setpCategory(String pCategory) {
+		this.pCategory = pCategory;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	//Table Discount
+	
+	public Integer getDiscount() {
+		return discount;
+	}
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+	public Integer getGst() {
+		return gst;
+	}
+	public void setGst(Integer gst) {
+		this.gst = gst;
+	}
+	public Double getDeliveryCharge() {
+		return deliveryCharge;
+	}
+	public void setDeliveryCharge(Double deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
+	}
+}
